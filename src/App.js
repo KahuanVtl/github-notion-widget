@@ -1,26 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
-import './relogio.js'
+import React, { useState, useEffect } from 'react';
 
-function App() {
+function Relogio() {
+  const [horarioAtual, setHorarioAtual] = useState(new Date());
+
+  useEffect(() => {
+    const timerID = setInterval(() => updateTime(), 1000);
+
+    return function cleanup() {
+      clearInterval(timerID);   
+    };
+  }, []);
+
+  function updateTime() {
+    setHorarioAtual(new Date());
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='clock-container'>
+      <h2>{horarioAtual.toLocaleTimeString()}</h2>
     </div>
   );
 }
 
-export default App;
+export default Relogio;
